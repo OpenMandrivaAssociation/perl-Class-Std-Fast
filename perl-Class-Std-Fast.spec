@@ -1,6 +1,6 @@
 %define module   Class-Std-Fast
-%define version    v0.0.8
-%define release    %mkrel 1
+%define version  0.0.8
+%define release  %mkrel 2
 
 Name:       perl-%{module}
 Version:    %{version}
@@ -9,8 +9,9 @@ License:    GPL or Artistic
 Group:      Development/Perl
 Summary:    faster but less secure than Class::Std
 Url:        http://search.cpan.org/dist/%{module}
-Source:     http://www.cpan.org/modules/by-module/Class/%{module}-%{version}.tar.gz
+Source:     http://www.cpan.org/modules/by-module/Class/%{module}-v%{version}.tar.gz
 Requires: perl-version
+Requires: perl(Class::Std)
 BuildRequires: perl(Class::Std)
 BuildRequires: perl(Data::Dumper)
 BuildRequires: perl(Scalar::Util)
@@ -30,7 +31,7 @@ Getting the objects ident is still possible via the ident method, but it's
 faster to scalarify your object.
 
 %prep
-%setup -q -n %{module}-%{version} 
+%setup -q -n %{module}-v%{version} 
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
