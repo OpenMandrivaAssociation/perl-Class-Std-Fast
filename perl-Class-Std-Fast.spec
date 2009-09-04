@@ -1,6 +1,6 @@
 %define module   Class-Std-Fast
 %define version  0.0.8
-%define release  %mkrel 2
+%define release  %mkrel 3
 
 Name:       perl-%{module}
 Version:    %{version}
