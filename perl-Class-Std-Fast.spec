@@ -1,25 +1,28 @@
-%define module   Class-Std-Fast
-%define version  0.0.8
-%define release  %mkrel 3
+%define upstream_name    Class-Std-Fast
+%define upstream_version v0.0.8
 
-Name:       perl-%{module}
-Version:    %{version}
-Release:    %{release}
-License:    GPL or Artistic
-Group:      Development/Perl
+Name:       perl-%{upstream_name}
+Version:    %perl_convert_version %{upstream_version}
+Release:    %mkrel 4
+
 Summary:    faster but less secure than Class::Std
-Url:        http://search.cpan.org/dist/%{module}
-Source:     http://www.cpan.org/modules/by-module/Class/%{module}-v%{version}.tar.gz
-Requires: perl-version
-Requires: perl(Class::Std)
+License:    GPL+ or Artistic
+Group:      Development/Perl
+Url:        http://search.cpan.org/dist/%{upstream_name}
+Source0:    http://www.cpan.org/modules/by-module/Class/%{upstream_name}-%{upstream_version}.tar.gz
+
 BuildRequires: perl(Class::Std)
 BuildRequires: perl(Data::Dumper)
+BuildRequires: perl(Module::Build::Compat)
 BuildRequires: perl(Scalar::Util)
 BuildRequires: perl(Test::More)
-BuildRequires: perl(Module::Build::Compat)
-BuildRequires: perl-version
+BuildRequires: perl(version)
+
 BuildArch: noarch
-BuildRoot:  %{_tmppath}/%{name}-%{version}
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}
+
+Requires: perl(Class::Std)
+Requires: perl(version)
 
 %description
 Class::Std::Fast allows you to use the beautiful API of Class::Std in a
@@ -31,14 +34,14 @@ Getting the objects ident is still possible via the ident method, but it's
 faster to scalarify your object.
 
 %prep
-%setup -q -n %{module}-v%{version} 
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
 %make
 
 %check
-make test
+%make test
 
 %install
 rm -rf %buildroot
@@ -52,5 +55,3 @@ rm -rf %buildroot
 %doc Changes README
 %{_mandir}/man3/*
 %perl_vendorlib/*
-
-
