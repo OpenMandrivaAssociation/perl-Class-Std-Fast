@@ -1,28 +1,28 @@
 %define upstream_name    Class-Std-Fast
 %define upstream_version v0.0.8
 
-Name:       perl-%{upstream_name}
-Version:    %perl_convert_version %{upstream_version}
-Release:    %mkrel 5
+Name:		perl-%{upstream_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	6
 
-Summary:    faster but less secure than Class::Std
-License:    GPL+ or Artistic
-Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Class/%{upstream_name}-%{upstream_version}.tar.gz
+Summary:	Faster but less secure than Class::Std
+License:	GPL+ or Artistic
+Group:		Development/Perl
+Url:		http://search.cpan.org/dist/%{upstream_name}
+Source0:	http://www.cpan.org/modules/by-module/Class/%{upstream_name}-%{upstream_version}.tar.gz
 
-BuildRequires: perl(Class::Std)
-BuildRequires: perl(Data::Dumper)
-BuildRequires: perl(Module::Build::Compat)
-BuildRequires: perl(Scalar::Util)
-BuildRequires: perl(Test::More)
-BuildRequires: perl(version)
+BuildRequires:	perl-devel
+BuildRequires:	perl(Class::Std)
+BuildRequires:	perl(Data::Dumper)
+BuildRequires:	perl(Module::Build::Compat)
+BuildRequires:	perl(Scalar::Util)
+BuildRequires:	perl(Test::More)
+BuildRequires:	perl(version)
 
-BuildArch: noarch
-BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}
+BuildArch:	noarch
 
-Requires: perl(Class::Std)
-Requires: perl(version)
+Requires:	perl(Class::Std)
+Requires:	perl(version)
 
 %description
 Class::Std::Fast allows you to use the beautiful API of Class::Std in a
@@ -37,21 +37,44 @@ faster to scalarify your object.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make
 
 %check
 %make test
 
 %install
-rm -rf %buildroot
 %makeinstall_std
 
-%clean
-rm -rf %buildroot
-
 %files
-%defattr(-,root,root)
 %doc Changes README
 %{_mandir}/man3/*
-%perl_vendorlib/*
+%{perl_vendorlib}/*
+
+
+%changelog
+* Mon Apr 18 2011 Funda Wang <fwang@mandriva.org> 0.0.8-5mdv2011.0
++ Revision: 654896
+- rebuild for updated spec-helper
+
+* Sun Feb 14 2010 Jérôme Quelin <jquelin@mandriva.org> 0.0.8-4mdv2011.0
++ Revision: 505698
+- rebuild using %%perl_convert_version
+
+* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 0.0.8-3mdv2010.0
++ Revision: 430334
+- rebuild
+
+* Wed Aug 13 2008 Guillaume Rousse <guillomovitch@mandriva.org> 0.0.8-2mdv2009.0
++ Revision: 271528
+- fix dependencies
+- fix version
+
+* Wed Aug 13 2008 Guillaume Rousse <guillomovitch@mandriva.org> v0.0.8-1mdv2009.0
++ Revision: 271303
+- import perl-Class-Std-Fast
+
+
+* Wed Aug 13 2008 Guillaume Rousse <guillomovitch@mandriva.org> v0.0.8-1mdv2009.0
+- initial mdv release, generated with cpan2dist
+
